@@ -4,6 +4,8 @@ const fs = require('fs');
 const { exec } = require("child_process");
 const { dirname } = require("path");
 
+const PORT = process.env.PORT || 3030;
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -41,6 +43,6 @@ app.post("/download", async (req, res) => {
     }
 })
 
-app.listen(8000, function () {
+app.listen(PORT, function () {
     console.log("server is running on port http://127.0.0.1:8000/");
 })
