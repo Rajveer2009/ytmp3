@@ -15,10 +15,6 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-app.get("/", function (req, res) {
-    res.sendFile(__dirname + "/index.html");
-})
-
 app.post("/download", async (req, res) => {
     let videoURL = req.body.url
     let format = req.body.format
