@@ -5,6 +5,7 @@ const { exec } = require("child_process");
 const { dirname } = require("path");
 
 const PORT = process.env.PORT || 3030;
+process.env.YTDL_NO_UPDATE = 'true';
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
