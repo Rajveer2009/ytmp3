@@ -15,30 +15,32 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-app.post("/download", async (req, res) => {
+app.post("/", async (req, res) => {
     let videoURL = req.body.url
-    let format = req.body.format
+    let format = req.body.formata
 
     if (format == "video") {
-        ytdl(videoURL, { filter: 'audioandvideo' })
-            .pipe(fs.createWriteStream(`${__dirname}/static/video.webm`))
-            .on('finish', async () => {
-                res.download(`${__dirname}/static/video.webm`)
-                await new Promise(r => setTimeout(r, 5000));
-                exec(`rm ${__dirname}/static/video.webm`)
-            })
+        ytdl(videoURL, { filter: 'videoandaudio' })
+            .pipe(fs.createWriteStream(`${__dirname}/static/video.mp4`))
+            .on('finish', () => {
+                res.download(`${__dirname}/static/video.mp4`)
+                sleep(5000).then(() => {
+                    exec(`rm ${__dirname}/static/video.mp4`)
+                });
+            });
     }
     else {
         ytdl(videoURL, { filter: 'audioonly' })
             .pipe(fs.createWriteStream(`${__dirname}/static/audio.webm`))
-            .on('finish', async () => {
+            .on('finish', () => {
                 res.download(`${__dirname}/static/audio.webm`)
-                await new Promise(r => setTimeout(r, 5000));
-                exec(`rm ${__dirname}/static/audio.webm`)
-            })
-    }
-})
+                sleep(5000).then(() => {
+                    exec(`rm ${__dirname}/static/audio.webm`)
+                });
+            });
+    };
 
-app.listen(PORT, function () {
-    console.log("server is running on port http://127.0.0.1:8000/");
-})
+}),
+    app.listen(3030, function () {
+        console.log("server is running on port http://127.0.0.1:3030/, https://ytmp3-dw2o.onrender.com/");
+    });
