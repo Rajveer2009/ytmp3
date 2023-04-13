@@ -21,7 +21,7 @@ app.post("/", async (req, res) => {
     let format = req.body.formata
 
     if (format == "video") {
-        ytdl(videoURL, { filter: 'videoandaudio' })
+        ytdl(videoURL, { filter: 'audioandvideo' })
             .pipe(fs.createWriteStream(`${__dirname}/static/video.mp4`))
             .on('finish', () => {
                 res.download(`${__dirname}/static/video.mp4`)
