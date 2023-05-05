@@ -5,7 +5,6 @@ const { exec } = require("child_process");
 const { dirname } = require("path");
 
 const PORT = process.env.PORT || 3030;
-process.env.YTDL_NO_UPDATE = 'true';
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -18,10 +17,10 @@ app.use(express.urlencoded({
 
 app.post("/", async (req, res) => {
     let videoURL = req.body.url
-    let format = req.body.format
+    let format = req.body.formata
 
     if (format == "video") {
-        ytdl(videoURL, { filter: 'audioandvideo' })
+        ytdl(videoURL, { filter: 'videoandaudio' })
             .pipe(fs.createWriteStream(`${__dirname}/static/video.mp4`))
             .on('finish', () => {
                 res.download(`${__dirname}/static/video.mp4`)
