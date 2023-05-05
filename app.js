@@ -17,7 +17,7 @@ app.use(express.urlencoded({
 
 app.post("/", async (req, res) => {
     let videoURL = req.body.url
-    let format = req.body.formata
+    let format = req.body.format
 
     if (format == "video") {
         ytdl(videoURL, { filter: 'videoandaudio' })
