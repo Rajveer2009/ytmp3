@@ -52,8 +52,7 @@
             <div class="col-md-6 offset-md-3">
                 <div class="card my-5">
 
-                    <form method="POST" action="https://ytmp3-dw2o.onrender.com/"
-                        class="card-body cardbody-color p-lg-5">
+                    <form method="POST" action="http://127.0.0.1:8000/" class="card-body cardbody-color p-lg-5">
 
                         <div class="text-center">
                             <h2 class="heading text-dark">YTMP3</h2>
@@ -62,15 +61,10 @@
                         <br>
 
                         <div class="mb-3">
-                            <input type="text" class="form-control" id="url" name="url" aria-describedby="emailHelp"
-                                placeholder="URL">
+                            <input type="text" class="form-control" id="url" name="url" placeholder="URL">
                         </div>
                         <div class="mb-3">
-                            <select name="format" id="format" class="custom-select">
-                                <option selected>Format</option>
-                                <option value="video">Video</option>
-                                <option value="audio">Audio</option>
-                            </select>
+                            <input type="text" class="form-control" id="format" name="format" placeholder="Format">
                         </div>
                         <hr>
                         <div class="text-center"><button type="submit"
