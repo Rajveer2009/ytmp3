@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
 })
 
-app.post("/", async (req, res) => {
+app.post("/post", async (req, res) => {
     let videoURL = req.body.url
     let format = req.body.format
     let vpath = pathlib.join(__dirname, "/static/video.mp4")
