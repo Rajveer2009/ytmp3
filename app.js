@@ -2,9 +2,9 @@ const express = require("express");
 const ytdl = require('ytdl-core');
 const fs = require('fs');
 const { exec } = require("child_process");
-const { dirname } = require("path");
+const pathlib = require("path");
 
-const PORT = process.env.PORT || 3030;
+const port = 8000
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -15,32 +15,35 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/index.html");
+})
+
 app.post("/", async (req, res) => {
     let videoURL = req.body.url
     let format = req.body.format
+    let vpath = pathlib.join(__dirname, "/static/video.mp4")
+    let apath = pathlib.join(__dirname, "/static/audio.webm")
 
     if (format == "video") {
         ytdl(videoURL, { filter: 'videoandaudio' })
-            .pipe(fs.createWriteStream(`${__dirname}/static/video.mp4`))
+            .pipe(fs.createWriteStream(vpath))
             .on('finish', () => {
-                res.download(`${__dirname}/static/video.mp4`)
-                sleep(5000).then(() => {
-                    exec(`rm ${__dirname}/static/video.mp4`)
-                });
+                res.download(vpath);
+            });
+    }
+    else if(format == "audio") {
+        ytdl(videoURL, { filter: 'audioonly' })
+            .pipe(fs.createWriteStream(apath))
+            .on('finish', () => {
+                res.download(apath);
             });
     }
     else {
-        ytdl(videoURL, { filter: 'audioonly' })
-            .pipe(fs.createWriteStream(`${__dirname}/static/audio.webm`))
-            .on('finish', () => {
-                res.download(`${__dirname}/static/audio.webm`)
-                sleep(5000).then(() => {
-                    exec(`rm ${__dirname}/static/audio.webm`)
-                });
-            });
-    };
+        res.sendStatus(400);
+    }
 
 }),
-    app.listen(3030, function () {
-        console.log("server is running on port http://127.0.0.1:3030/, https://ytmp3-dw2o.onrender.com/");
+    app.listen(port, function() {
+        console.log(`server is running on port http://127.0.0.1:${port}/`);
     });
