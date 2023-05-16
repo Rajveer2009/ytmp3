@@ -25,6 +25,8 @@ app.post("/post", async (req, res) => {
     let vpath = pathlib.join(__dirname, "/static/video.mp4")
     let apath = pathlib.join(__dirname, "/static/audio.webm")
 
+    console.log("req accept");
+
     if (format == "video") {
         ytdl(videoURL, { filter: 'videoandaudio' })
             .pipe(fs.createWriteStream(vpath))
